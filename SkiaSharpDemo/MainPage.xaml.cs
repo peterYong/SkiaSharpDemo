@@ -23,5 +23,10 @@ namespace SkiaSharpDemo
         {
             Navigation.PushAsync(new Basics.BasicsHomePage());
         }
+
+        private void WoSign_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new WoSign.WoSignHomePage());
+        }
     }
 }

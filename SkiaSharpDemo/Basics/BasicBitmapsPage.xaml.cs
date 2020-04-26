@@ -14,6 +14,9 @@ using System.Reflection;
 
 namespace SkiaSharpDemo.Basics
 {
+    /// <summary>
+    /// 加载位图（从互联网/本地图片/项目中的图片）
+    /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class BasicBitmapsPage : ContentPage
     {
@@ -82,6 +85,13 @@ namespace SkiaSharpDemo.Basics
                 float y = (info.Height / 3 - webBitmap.Height) / 2;
                 canvas.DrawBitmap(webBitmap, x, y);
             }
+            //SKBitmap saveBitmap = SKBitmap.Decode(Common.ImageBytes);
+            //if (saveBitmap != null)
+            //{
+            //    float x = (info.Width - saveBitmap.Width) / 2;
+            //    float y = (info.Height / 3 - saveBitmap.Height) / 2;
+            //    canvas.DrawBitmap(saveBitmap, x, y);
+            //}
 
             if (resourceBitmap != null)
             {
@@ -145,6 +155,7 @@ namespace SkiaSharpDemo.Basics
                     //此时，需要使SKCanvasView InvalidateSurface，以允许PaintSurface处理程序更新显示。
                     webBitmap = SKBitmap.Decode(memoryStream);
                     canvasView.InvalidateSurface();
+
                 }
 
             }

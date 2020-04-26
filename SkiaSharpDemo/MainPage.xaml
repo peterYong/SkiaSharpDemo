@@ -12,6 +12,7 @@
            HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand" />
         <Button Text="SkiaSharp Drawing Basics" x:Name="basics" Clicked="basics_Clicked"/>
+        <Button Text="测试 我签" x:Name="WoSign" Clicked="WoSign_Clicked"/>
     </StackLayout>
 
 </ContentPage>

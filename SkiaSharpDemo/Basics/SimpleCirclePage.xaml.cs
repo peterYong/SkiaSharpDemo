@@ -49,6 +49,10 @@ namespace SkiaSharpDemo.Basics
             SKImageInfo info = args.Info;
             SKSurface surface = args.Surface;
             SKCanvas canvas = surface.Canvas;
+           
+            //SKBitmap saveBitmap = new SKBitmap(info);
+            //SKCanvas canvas = new SKCanvas(saveBitmap); //将图形保存到bitmap中
+
 
             //Clear方法使用透明颜色清除画布。 重载使您可以为画布指定背景色。
             canvas.Clear();
@@ -69,7 +73,22 @@ namespace SkiaSharpDemo.Basics
             paint.Style = SKPaintStyle.Fill; //填充
             paint.Color = SKColors.Blue;
             canvas.DrawCircle(info.Width / 2, info.Height / 2, 170, paint);
+
+            //canvas.DrawBitmap(saveBitmap,0,0);
+            //Common.ImageBytes = GetBytes(saveBitmap);
         }
+
+
+        public byte[] GetBytes(SKBitmap saveBitmap)
+        {
+            using (SKImage image = SKImage.FromBitmap(saveBitmap))
+            {
+                SKData data = image.Encode();
+                byte[] bytes = data.ToArray();
+                return bytes;
+            }
+        }
+
 
     }
 }
