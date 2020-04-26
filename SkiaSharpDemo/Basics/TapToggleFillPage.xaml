@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="SkiaSharpDemo.Basics.TapToggleFillPage"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms">
+    <ContentPage.Content>
+        <!--<StackLayout>
+            <Label Text="Welcome to Xamarin.Forms!" HeightRequest="20" 
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+
+            <skia:SKCanvasView PaintSurface="SKCanvasView_PaintSurface" VerticalOptions="StartAndExpand" HeightRequest="400" BackgroundColor="LightGray">
+                <skia:SKCanvasView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                </skia:SKCanvasView.GestureRecognizers>
+            </skia:SKCanvasView>
+        </StackLayout>-->
+
+
+        <StackLayout>
+            <Grid>
+                <skia:SKCanvasView PaintSurface="SKCanvasView_PaintSurface" VerticalOptions="FillAndExpand" HeightRequest="400" BackgroundColor="LightGray">
+                    <skia:SKCanvasView.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                    </skia:SKCanvasView.GestureRecognizers>
+                </skia:SKCanvasView>
+                
+                <!--文字在图形上（顶部）-->
+                <Label Text="Welcome to Xamarin.Forms!" HeightRequest="20" 
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            </Grid>
+
+
+        </StackLayout>
+
+    </ContentPage.Content>
+</ContentPage>

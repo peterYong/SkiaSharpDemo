@@ -1,0 +1,66 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Media\Banana.jpg" />
+    <None Remove="Media\BananaMatte.png" />
+    <None Remove="Media\BrickWallTile.jpg" />
+    <None Remove="Media\FacePalm.jpg" />
+    <None Remove="Media\monkey.png" />
+    <None Remove="Media\MonkeyFace.png" />
+    <None Remove="Media\MountainClimbers.jpg" />
+    <None Remove="Media\Newtons_cradle_animation_book_2.gif" />
+    <None Remove="Media\PageOfCode.png" />
+    <None Remove="Media\SeatedMonkey.jpg" />
+    <None Remove="Media\SeatedMonkeyMatte.png" />
+    <None Remove="Media\StoneWallTile.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Media\Banana.jpg" />
+    <EmbeddedResource Include="Media\BananaMatte.png" />
+    <EmbeddedResource Include="Media\BrickWallTile.jpg" />
+    <EmbeddedResource Include="Media\FacePalm.jpg" />
+    <EmbeddedResource Include="Media\monkey.png" />
+    <EmbeddedResource Include="Media\MonkeyFace.png" />
+    <EmbeddedResource Include="Media\MountainClimbers.jpg" />
+    <EmbeddedResource Include="Media\Newtons_cradle_animation_book_2.gif" />
+    <EmbeddedResource Include="Media\PageOfCode.png" />
+    <EmbeddedResource Include="Media\SeatedMonkey.jpg" />
+    <EmbeddedResource Include="Media\SeatedMonkeyMatte.png" />
+    <EmbeddedResource Include="Media\StoneWallTile.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SkiaSharp.Views.Forms" Version="1.68.1.1" />
+    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991265" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Basics\BasicBitmapsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Basics\BasicsHomePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Basics\FramedTextPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Basics\SimpleCirclePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Basics\TapToggleFillPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

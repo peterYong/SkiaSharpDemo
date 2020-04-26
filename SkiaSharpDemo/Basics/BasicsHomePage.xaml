@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="SkiaSharpDemo.Basics.BasicsHomePage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Welcome to Xamarin.Forms!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <Button Text="Simple Circle" x:Name="circle" Clicked="circle_Clicked"/>
+            <Button Text="Tap Toggle Fill" x:Name="toggle" Clicked="toggle_Clicked"/>
+            <Button Text="Framed Text" x:Name="framed" Clicked="framed_Clicked"/>
+            <Button Text="Basic Bitmaps" x:Name="bitmaps" Clicked="bitmaps_Clicked"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
