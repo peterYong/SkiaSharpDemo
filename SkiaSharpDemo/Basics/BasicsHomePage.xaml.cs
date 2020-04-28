@@ -36,5 +36,10 @@ namespace SkiaSharpDemo.Basics
         {
             Navigation.PushAsync(new BasicBitmapsPage());
         }
+
+        private void ellipse_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new EllipseFillPage());
+        }
     }
 }

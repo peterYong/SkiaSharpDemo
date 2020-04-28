@@ -4,12 +4,27 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="SkiaSharpDemo.WoSign.CreateStampPage">
+             x:Class="SkiaSharpDemo.WoSign.CreateStampPage"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="800" />
+                </Grid.RowDefinitions>
+
+                <StackLayout Orientation="Horizontal" Grid.Row="0">
+                    <Label Text="输入公司名" VerticalOptions="CenterAndExpand" />
+                    <Entry x:Name="company" Text="{Binding Company}" HorizontalOptions="StartAndExpand" WidthRequest="200" />
+                    <Button Text="画印章" HorizontalOptions="End" Clicked="Button_Clicked"/>
+                </StackLayout>
+               
+
+                <skia:SKCanvasView x:Name="canvasView"
+                           Grid.Row="1" BackgroundColor="Gray"
+                           PaintSurface="skia_PaintSurface" />
+            </Grid>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

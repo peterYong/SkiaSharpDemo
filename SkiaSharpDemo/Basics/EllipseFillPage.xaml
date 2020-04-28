@@ -3,15 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+              xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
              mc:Ignorable="d"
-             x:Class="SkiaSharpDemo.WoSign.ShowImageBytesPage"
-             BackgroundColor="Gray" >
+             x:Class="SkiaSharpDemo.Basics.EllipseFillPage">
     <ContentPage.Content>
-        <StackLayout>
-            <StackLayout Orientation="Horizontal">
-                <Label Text="重新显示图像"/>
-                <Image x:Name="imageStamp"  BackgroundColor="Gray" VerticalOptions="CenterAndExpand"/>
-            </StackLayout>
-        </StackLayout>
+        <skia:SKCanvasView PaintSurface="OnCanvasViewPaintSurface" />
     </ContentPage.Content>
 </ContentPage>

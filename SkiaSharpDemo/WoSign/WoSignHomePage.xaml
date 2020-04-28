@@ -15,6 +15,9 @@
             <Button Text="生成图像" x:Name="create" Clicked="create_Clicked"/>
             
             <Button Text="显示图像" x:Name="show" Clicked="show_Clicked"/>
+
+            <Button Text="演示" x:Name="demo" Clicked="demo_Clicked"/>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
