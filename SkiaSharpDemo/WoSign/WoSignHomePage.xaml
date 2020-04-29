@@ -10,13 +10,15 @@
             <Label Text="Welcome to Xamarin.Forms!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
-            <Button Text="生成签章" x:Name="createStamp" Clicked="createStamp_Clicked"/>
-            
-            <Button Text="生成图像" x:Name="create" Clicked="create_Clicked"/>
-            
+            <Button Text="生成中文签章" x:Name="createStamp" Clicked="createStamp_Clicked"/>
+            <Button Text="生成英文签章" x:Name="createENStamp" Clicked="createENStamp_Clicked"/>
+
+
+
             <Button Text="显示图像" x:Name="show" Clicked="show_Clicked"/>
 
             <Button Text="演示" x:Name="demo" Clicked="demo_Clicked"/>
+            <Button Text="生成图像" x:Name="create" Clicked="create_Clicked"/>
 
         </StackLayout>
     </ContentPage.Content>

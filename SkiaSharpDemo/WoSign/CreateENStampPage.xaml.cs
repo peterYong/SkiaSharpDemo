@@ -2,7 +2,10 @@
 using SkiaSharp.Views.Forms;
 using SkiaSharpDemo.Helper;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -10,7 +13,7 @@ using Xamarin.Forms.Xaml;
 namespace SkiaSharpDemo.WoSign
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CreateStampPage : ContentPage
+    public partial class CreateENStampPage : ContentPage
     {
         private string _company;
         public string Company
@@ -28,14 +31,13 @@ namespace SkiaSharpDemo.WoSign
         int width = 0;
         int height = 0;
 
-        //string text = "Hello123" + Environment.NewLine + "xx技术有限公司";
         string stampType = "电子公章";
 
         /// <summary>
         /// 用于在显示时的大小
         /// </summary>
-        int skiaBitmapsRadius = 200;  
-       
+        int skiaBitmapsRadius = 200;
+
         /// <summary>
         /// 像素与Xamarin.Forms之间的比例。差不多是2.5倍
         /// </summary>
@@ -51,28 +53,27 @@ namespace SkiaSharpDemo.WoSign
         /// </summary>
         SKPaint paintCircle;
 
+        SKColor color;
 
-        public CreateStampPage()
+        public CreateENStampPage()
         {
             InitializeComponent();
 
             BindingContext = this;
 
-            Title = "生成签章";
-            Company = "xx有限公司";
+            Title = "生成英文签章";
+            Company = "WODEYONG HA";
             Init();
         }
 
-       
         private void Init()
         {
-            //width = skiaBitmapsRadius;
-            //height = skiaBitmapsRadius;  
             width = Convert.ToInt32(skiaBitmapsRadius * scale);
             height = width;
 
             SKFontManager fontManager = SKFontManager.Default;
-            skTextPaint = new SKPaint() { TextSize = 50, Color = SKColors.Red };
+            color = Color.FromRgb(68, 114, 196).ToSKColor();
+            skTextPaint = new SKPaint() { TextSize = 50, Color = color };
             skTextPaint.IsAntialias = true;
             //兼容中文
             //skTextPaint.Typeface = fontManager.MatchCharacter("时");
@@ -83,37 +84,46 @@ namespace SkiaSharpDemo.WoSign
             paintCircle = new SKPaint
             {
                 Style = SKPaintStyle.Stroke,
-                Color = Color.Red.ToSKColor(),
+                Color = color,
                 StrokeWidth = 10
             };
         }
 
+
         /// <summary>
-        /// 创建一个位图 并在它上面绘制一个圆圈、五角星、文本
+        /// 创建一个位图 并在它上面绘制一个圆圈、文本、圆圈、文本、五角星
         /// </summary>
         private void CreateBitmap()
         {
-
             stampBitmap = new SKBitmap(width, height);
             using (SKCanvas bitmapCanvas = new SKCanvas(stampBitmap))
             {
-                //bitmapCanvas.Clear(SKColors.White); //位图的底部颜色
                 bitmapCanvas.Clear(SKColors.Transparent); //位图的底部颜色
                 bitmapCanvas.DrawCircle(width / 2, height / 2, (width - 20) / 2, paintCircle);
 
-                PaintFiveStar(bitmapCanvas, width, height);
-                PaintStampType(bitmapCanvas, stampType, width, height, skTextPaint);
+                paintCircle.StrokeWidth = 6;
+                bitmapCanvas.DrawCircle(width / 2, height / 2, (width - 20) / 2 - 39 - 40, paintCircle);  //画内圈，文字高度大概39
+
+                //画居中线
+                //SKPath sKPath = new SKPath();
+                //sKPath.MoveTo(new SKPoint(-width / 2, width / 2));
+                //sKPath.LineTo(new SKPoint(width / 2, width / 2));
+                //SKPaint strokePaint = new SKPaint
+                //{
+                //    Style = SKPaintStyle.Stroke, //轮廓
+                //    Color = SKColors.Red,
+                //    StrokeWidth = 5  //设置为小点 顶部就看似重合了
+                //};
+                //bitmapCanvas.DrawPath(sKPath, strokePaint);
 
                 PaintStampText(bitmapCanvas, Company, width, height, skTextPaint);
+
+                PaintStampType(bitmapCanvas, stampType, width, height, skTextPaint);
+
+                PaintFiveStar(bitmapCanvas, width, height);
             }
             Common.ImageBytes = BitmapHelper.GetBytes(stampBitmap); //将位图转为字节数组（以后 重新生成时用）
 
-
-            // Create SKCanvasView to view result。【在设备的屏幕上 显示位图】
-            //SKCanvasView canvasView = new SKCanvasView();
-            //canvasView.BackgroundColor = Color.Gray;
-            //canvasView.PaintSurface += skia_PaintSurface;
-            //Content = canvasView;
         }
 
         /// <summary>
@@ -201,6 +211,24 @@ namespace SkiaSharpDemo.WoSign
         }
 
         /// <summary>
+        /// 画 签章的类型
+        /// </summary>
+        /// <param name="bitmapCanvas"></param>
+        /// <param name="stampType"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="skTextPaint"></param>
+        private void PaintStampType(SKCanvas bitmapCanvas, string stampType, int width, int height, SKPaint skTextPaint)
+        {
+            byte[] texts = Encoding.UTF8.GetBytes(stampType);
+            SKRect rect = new SKRect();
+            skTextPaint.MeasureText(stampType, ref rect);  //注意不同字体大小 测出来的长度不一样
+            float textWidth = rect.Width;
+            float textHeight = rect.Height;
+            bitmapCanvas.DrawText(texts, -textWidth / 2, textHeight / 2, skTextPaint); //文本是左下角为原点
+        }
+
+        /// <summary>
         /// 画五角星
         /// </summary>
         /// <param name="bitmapCanvas"></param>
@@ -208,14 +236,17 @@ namespace SkiaSharpDemo.WoSign
         /// <param name="height"></param>
         private void PaintFiveStar(SKCanvas bitmapCanvas, int width, int height)
         {
-            SKPoint center = new SKPoint(width / 2, height / 2);
-            float radius = 80;  //控制五角星大小
+            bitmapCanvas.Translate(-width / 2, -height / 2);  //移到原点
+
+            float top = 90 * height / 100;
+            SKPoint center = new SKPoint(width / 2, top); //五角星的中心点
+            float radius = 24;  //控制五角星大小
 
             SKPath path = new SKPath
             {
                 FillType = SKPathFillType.Winding
             };
-            path.MoveTo(width / 2, height / 2 - radius);
+            path.MoveTo(width / 2, top - radius); //五角星的起点
 
             for (int i = 1; i < 5; i++)
             {
@@ -230,40 +261,15 @@ namespace SkiaSharpDemo.WoSign
             SKPaint fillPaint = new SKPaint
             {
                 Style = SKPaintStyle.Fill,
-                Color = SKColors.Red
+                Color = color
             };
             bitmapCanvas.DrawPath(path, fillPaint);
         }
 
-        /// <summary>
-        /// 画 签章的类型
-        /// </summary>
-        /// <param name="bitmapCanvas"></param>
-        /// <param name="stampType"></param>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
-        /// <param name="skTextPaint"></param>
-        private void PaintStampType(SKCanvas bitmapCanvas, string stampType, int width, int height, SKPaint skTextPaint)
-        {
-            float top = 85 * height / 100;
-            if (stampType.Length >= 9)
-            {
-                skTextPaint.TextSize = 40;
-                top = 80 * height / 100;
-            }
-            else if (stampType.Length >= 7)
-            {
-                skTextPaint.TextSize = 40;
-            }
-            else
-            {
-                skTextPaint.TextSize = 50;
-            }
-            byte[] texts = Encoding.UTF8.GetBytes(stampType);
-            float textWidth = skTextPaint.MeasureText(stampType); //注意不同字体大小 测出来的长度不一样
-            float left = (width - textWidth) / 2.0f;
 
-            bitmapCanvas.DrawText(texts, left, top, skTextPaint);
+        private void Picker_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            stampType = (String)sealTypePicker.SelectedItem;
         }
 
         private void Button_Clicked(object sender, EventArgs e)
@@ -275,28 +281,11 @@ namespace SkiaSharpDemo.WoSign
             }
         }
 
-        private void Picker_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            stampType = (String)sealTypePicker.SelectedItem;
-        }
-
         private void skia_PaintSurface(object sender, SKPaintSurfaceEventArgs args)
         {
-            //SKImageInfo结构包含有关绘图表面的信息，最重要的是其宽度和高度（以像素为单位）。 
-            //SKSurface对象代表绘图表面本身。 在此程序中，绘图表面是视频显示，但在其他程序中，SKSurface对象也可以表示您使用SkiaSharp进行绘图的 Bitmaps位图。
-            //SKSurface的最重要属性是SKCanvas类型的Canvas。此类是用于执行实际绘图的图形绘图上下文，SKCanvas对象封装了图形状态，其中包括图形转换和裁剪。
-
             SKImageInfo info = args.Info;
             SKSurface surface = args.Surface;
             SKCanvas canvas = surface.Canvas;
-
-            //if (width == skiaBitmapsRadius)
-            //{
-            // //比例，像素与Xamarin.Forms之间的比例。差不多是2.5倍
-            //    width = Convert.ToInt32((canvasView.CanvasSize.Width / canvasView.Width) * width);
-            //    height = Convert.ToInt32((canvasView.CanvasSize.Width / canvasView.Width) * height);
-            //}
-
 
             if (stampBitmap != null)
             {
@@ -304,6 +293,5 @@ namespace SkiaSharpDemo.WoSign
                 canvas.DrawBitmap(stampBitmap, (info.Width - width) / 2, (info.Height - height) / 2 - 200); //坐标
             }
         }
-
     }
 }

@@ -4,9 +4,8 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="SkiaSharpDemo.WoSign.CreateStampPage"
-             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
-             xmlns:items="clr-namespace:SkiaSharpDemo">
+             x:Class="SkiaSharpDemo.WoSign.CreateENStampPage"
+              xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms">
     <ContentPage.Content>
         <StackLayout>
             <Grid>
@@ -26,22 +25,9 @@
                     <Label Text="印章类型" VerticalOptions="CenterAndExpand" />
                     <Picker x:Name="sealTypePicker" WidthRequest="150" SelectedIndexChanged="Picker_SelectedIndexChanged">
                         <Picker.ItemsSource>
-                            <!--<x:Array Type="{x:Type items:SealType}">
-                                <x:Static Member="items:SealType.Gongzhang"/>
-                                <x:Static Member="items:SealType.Hetong"/>
-                                <x:Static Member="items:SealType.Caiwu"/>
-                                <x:Static Member="items:SealType.Fapiao"/>
-                                <x:Static Member="items:SealType.Laodonghetong"/>
-                            </x:Array>-->
-
                             <x:Array Type="{x:Type x:String}">
-                                <x:String>电子公章</x:String>
-                                <x:String>电子合同章</x:String>
-                                <x:String>电子财务章</x:String>
-                                <x:String>电子发票章</x:String>
-                                <x:String>电子劳动合同章</x:String>
-                                <x:String>电子劳动合同测章</x:String>
-                                <x:String>电子劳动合同测试章</x:String>
+                                <x:String>SEAL</x:String>
+                                <x:String>CONTRACT</x:String>
                             </x:Array>
                         </Picker.ItemsSource>
                         <Picker.SelectedIndex>

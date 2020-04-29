@@ -28,5 +28,10 @@ namespace SkiaSharpDemo
         {
             Navigation.PushAsync(new WoSign.WoSignHomePage());
         }
+
+        private void skiaSharp_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new SkiaFont.SkiaSharpFontPage());
+        }
     }
 }

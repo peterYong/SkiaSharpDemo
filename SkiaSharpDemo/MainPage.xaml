@@ -13,6 +13,8 @@
            VerticalOptions="CenterAndExpand" />
         <Button Text="SkiaSharp Drawing Basics" x:Name="basics" Clicked="basics_Clicked"/>
         <Button Text="测试 我签" x:Name="WoSign" Clicked="WoSign_Clicked"/>
+
+        <Button Text="测试 SkiaSharp 字体" x:Name="skiaSharp" Clicked="skiaSharp_Clicked"/>
     </StackLayout>
 
 </ContentPage>

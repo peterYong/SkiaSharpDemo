@@ -5,12 +5,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="SkiaSharpDemo.WoSign.ShowImageBytesPage"
-             BackgroundColor="Gray" >
+             BackgroundColor="White" >
     <ContentPage.Content>
         <StackLayout>
             <StackLayout Orientation="Horizontal">
                 <Label Text="重新显示图像"/>
-                <Image x:Name="imageStamp"  BackgroundColor="Gray" VerticalOptions="CenterAndExpand"/>
+                <!--<Image x:Name="imageStamp"   VerticalOptions="CenterAndExpand" WidthRequest="100" HeightRequest="100" />-->
+                <Image x:Name="imageStamp"   VerticalOptions="CenterAndExpand" WidthRequest="200" HeightRequest="200" />
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>
