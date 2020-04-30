@@ -11,7 +11,11 @@
             <StackLayout Orientation="Horizontal">
                 <Label Text="重新显示图像"/>
                 <!--<Image x:Name="imageStamp"   VerticalOptions="CenterAndExpand" WidthRequest="100" HeightRequest="100" />-->
-                <Image x:Name="imageStamp"   VerticalOptions="CenterAndExpand" WidthRequest="200" HeightRequest="200" />
+               
+                <!--<Image x:Name="imageStamp"   VerticalOptions="CenterAndExpand" WidthRequest="200" HeightRequest="200" BackgroundColor="Red" />-->
+
+                <Image x:Name="imageStamp"   VerticalOptions="CenterAndExpand" WidthRequest="300" HeightRequest="114" BackgroundColor="Red" />
+
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

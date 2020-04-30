@@ -12,6 +12,7 @@ using Xamarin.Forms.Xaml;
 
 namespace SkiaSharpDemo.WoSign
 {
+   
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CreateENStampPage : ContentPage
     {
@@ -55,6 +56,9 @@ namespace SkiaSharpDemo.WoSign
 
         SKColor color;
 
+        /// <summary>
+        /// 创建英文单位图章
+        /// </summary>
         public CreateENStampPage()
         {
             InitializeComponent();

@@ -52,6 +52,9 @@ namespace SkiaSharpDemo.WoSign
         SKPaint paintCircle;
 
 
+        /// <summary>
+        /// 创建中文单位签章
+        /// </summary>
         public CreateStampPage()
         {
             InitializeComponent();

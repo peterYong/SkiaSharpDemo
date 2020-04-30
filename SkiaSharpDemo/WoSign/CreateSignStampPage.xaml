@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="SkiaSharpDemo.WoSign.CreateSignStampPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Button Text="V1中英文手写签名" x:Name="createV1" Clicked="createV1_Clicked"/>
+            <Button Text="V2中文章" x:Name="createV2" Clicked="createV2_Clicked"/>
+            <Button Text="V2英文签名" x:Name="createV2EN" Clicked="createV2EN_Clicked"/>
+            <Button Text="V3英文签名" x:Name="createV3EN" Clicked="createV3EN_Clicked"/>
+            <Button Text="V4英文签名" x:Name="createV4EN" Clicked="createV4EN_Clicked"/>
+            <!--<Button Text="生成中文个人签名" x:Name="createSignStamp" Clicked="createSignStamp_Clicked"/>-->
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

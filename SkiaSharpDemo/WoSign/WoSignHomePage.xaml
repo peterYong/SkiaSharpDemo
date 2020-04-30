@@ -13,7 +13,7 @@
             <Button Text="生成中文签章" x:Name="createStamp" Clicked="createStamp_Clicked"/>
             <Button Text="生成英文签章" x:Name="createENStamp" Clicked="createENStamp_Clicked"/>
 
-
+            <Button Text="生成个人签名" x:Name="createSignStamp" Clicked="createSignStamp_Clicked"/>
 
             <Button Text="显示图像" x:Name="show" Clicked="show_Clicked"/>
 

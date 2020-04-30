@@ -41,5 +41,10 @@ namespace SkiaSharpDemo.WoSign
         {
             Navigation.PushAsync(new CreateENStampPage());
         }
+
+        private void createSignStamp_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new CreateSignStampPage());
+        }
     }
 }

@@ -14,6 +14,9 @@ namespace SkiaSharpDemo.WoSign
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CreateImagePage : ContentPage
     {
+        /// <summary>
+        /// 创建一个位图（圆圈）
+        /// </summary>
         public CreateImagePage()
         {
             InitializeComponent();
