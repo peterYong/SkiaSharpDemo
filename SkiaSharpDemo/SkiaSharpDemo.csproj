@@ -11,6 +11,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\Lobster-Regular.ttf" />
+    <None Remove="Fonts\Palace Script MT Semi Bold.ttf" />
+    <None Remove="Fonts\palace script mt.ttf" />
     <None Remove="Fonts\PALSCRI.TTF" />
     <None Remove="Media\Banana.jpg" />
     <None Remove="Media\BananaMatte.png" />
@@ -27,6 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Fonts\Lobster-Regular.ttf" />
+    <EmbeddedResource Include="Fonts\Palace Script MT Semi Bold.ttf" />
+    <EmbeddedResource Include="Fonts\palace script mt.ttf" />
     <EmbeddedResource Include="Fonts\PALSCRI.TTF" />
     <EmbeddedResource Include="Media\Banana.jpg" />
     <EmbeddedResource Include="Media\BananaMatte.png" />

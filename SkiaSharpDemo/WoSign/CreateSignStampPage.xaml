@@ -13,6 +13,13 @@
             <Button Text="V3英文签名" x:Name="createV3EN" Clicked="createV3EN_Clicked"/>
             <Button Text="V4英文签名" x:Name="createV4EN" Clicked="createV4EN_Clicked"/>
             <!--<Button Text="生成中文个人签名" x:Name="createSignStamp" Clicked="createSignStamp_Clicked"/>-->
+            <Label Text="Hello Forms with XAML" FontFamily="Lobster"   />
+            <Label Text="your fullname" FontFamily="Lobster" Margin="20" FontSize="40" />
+            <Label Text="your fullname" FontFamily="PALSCRI" Margin="20" FontSize="40" TextColor="Black"/>
+            <Label Text="your fullname" FontFamily="palaceBold" Margin="20" FontSize="60" TextColor="Black"/>
+            <!--your fullname-->
+            <!--Lobster-->
+            <!--PALSCRI-->
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

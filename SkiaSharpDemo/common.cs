@@ -7,5 +7,6 @@ namespace SkiaSharpDemo
     public class Common
     {
         public static byte[] ImageBytes { get; set; }
+
     }
 }

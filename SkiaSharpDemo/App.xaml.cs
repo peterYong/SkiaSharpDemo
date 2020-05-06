@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharpDemo.Font;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,6 +17,7 @@ namespace SkiaSharpDemo
 
         protected override void OnStart()
         {
+            TypefaceCustomize.Init();
         }
 
         protected override void OnSleep()

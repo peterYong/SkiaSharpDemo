@@ -1,9 +1,12 @@
 ﻿using SkiaSharp;
 using SkiaSharp.Views.Forms;
+using SkiaSharpDemo.Font;
 using SkiaSharpDemo.Helper;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,7 +24,6 @@ namespace SkiaSharpDemo.WoSign
         }
 
         #region Field
-
         private string _name;
         public string Name
         {
@@ -51,9 +53,6 @@ namespace SkiaSharpDemo.WoSign
         //位图的宽和高
         int width = 0;
         int height = 0;
-
-        //string text = "Hello123" + Environment.NewLine + "xx技术有限公司";
-        string stampType = "电子公章";
 
         /// <summary>
         /// 用于在显示时的大小
@@ -89,8 +88,7 @@ namespace SkiaSharpDemo.WoSign
         /// </summary>
         private SignType signType;
 
-        SKFontManager fontManager = SKFontManager.Default;
-
+        string yinStr = "印";
         #endregion
 
         /// <summary>
@@ -101,25 +99,22 @@ namespace SkiaSharpDemo.WoSign
         {
             InitializeComponent();
 
-
             BindingContext = this;
 
             Init(type);
         }
 
-
         private void Init(SignType type)
         {
             signType = type;
 
-            paintText = new SKPaint() { Color = colorBlue };
-            paintText.IsAntialias = true;
-            //兼容中文
-            //skTextPaint.Typeface = fontManager.MatchCharacter("时");
-
-            //字体粗细、字体宽度（压缩/扩展）、字体倾斜
-            paintText.Typeface = fontManager.MatchCharacter("", SKFontStyleWeight.Bold, SKFontStyleWidth.Normal, SKFontStyleSlant.Upright, new string[] { "zh" }, '时');
-            //skTextPaint.Typeface = fontManager.MatchCharacter("sans-serif-black", SKFontStyleWeight.Bold, SKFontStyleWidth.Normal, SKFontStyleSlant.Upright, null, '时');
+            paintText = new SKPaint()
+            {
+                Color = colorBlue,
+                IsAntialias = true,
+                Typeface = TypefaceCustomize.Regular,
+            };
+           
             paintLine = new SKPaint
             {
                 Style = SKPaintStyle.Stroke,
@@ -166,7 +161,6 @@ namespace SkiaSharpDemo.WoSign
 
         #region V1
 
-
         private void CreateV1()
         {
             width = Convert.ToInt32(300 * scale);
@@ -185,15 +179,11 @@ namespace SkiaSharpDemo.WoSign
 
         private void PaintName(SKCanvas bitmapCanvas, int width, int height, SKPaint paintText)
         {
-            if (signType == SignType.V2EN)
-            {
-                paintText.Typeface = fontManager.MatchCharacter("sans-serif-black", '时');
-            }
             paintText.Color = colorBlack;
             paintText.TextSize = 80;
             SKRect rect = new SKRect();
             paintText.MeasureText(Name, ref rect);
-            bitmapCanvas.DrawText(Name, 0, (height / 2.0f) / 2.0f + rect.Height / 2.0f, paintText);
+            bitmapCanvas.DrawText(Name, 20, (height / 2.0f) / 2.0f + rect.Height / 2.0f, paintText);
         }
 
         /// <summary>
@@ -214,10 +204,9 @@ namespace SkiaSharpDemo.WoSign
             paintText.TextSize = 60;
             SKRect rect = new SKRect();
             paintText.MeasureText(Email, ref rect);
-            bitmapCanvas.DrawText(Email, 0, 3 * height / 4.0f + rect.Height / 2.0f - rect.Height / 2.0f, paintText); //为了靠近一点横线，减号后面是临时加的
+            bitmapCanvas.DrawText(Email, 10, 3 * height / 4.0f + rect.Height / 2.0f - rect.Height / 2.0f, paintText); //为了靠近一点横线，减号后面是临时加的
         }
         #endregion
-
 
         #region V2
 
@@ -230,36 +219,27 @@ namespace SkiaSharpDemo.WoSign
             {
                 bitmapCanvas.Clear(SKColors.White); //位图的底部颜色
 
-                //画居中线
-                SKPath sKPath = new SKPath();
-                sKPath.MoveTo(new SKPoint(0, height / 2));
-                sKPath.LineTo(new SKPoint(width, height / 2));
-                SKPaint strokePaint = new SKPaint
-                {
-                    Style = SKPaintStyle.Stroke, //轮廓
-                    Color = SKColors.Red,
-                    StrokeWidth = 5  //设置为小点 顶部就看似重合了
-                };
-                bitmapCanvas.DrawPath(sKPath, strokePaint);
-                //画居中线
-                SKPath sKPath2 = new SKPath();
-                sKPath2.MoveTo(new SKPoint(width / 2, 0));
-                sKPath2.LineTo(new SKPoint(width / 2, height));
-                bitmapCanvas.DrawPath(sKPath2, strokePaint);
+                ////画居中线
+                //SKPath sKPath = new SKPath();
+                //sKPath.MoveTo(new SKPoint(0, height / 2));
+                //sKPath.LineTo(new SKPoint(width, height / 2));
+                //SKPaint strokePaint = new SKPaint
+                //{
+                //    Style = SKPaintStyle.Stroke, //轮廓
+                //    Color = SKColors.Red,
+                //    StrokeWidth = 5  //设置为小点 顶部就看似重合了
+                //};
+                //bitmapCanvas.DrawPath(sKPath, strokePaint);
+                ////画居中线
+                //SKPath sKPath2 = new SKPath();
+                //sKPath2.MoveTo(new SKPoint(width / 2, 0));
+                //sKPath2.LineTo(new SKPoint(width / 2, height));
+                //bitmapCanvas.DrawPath(sKPath2, strokePaint);
 
 
                 float offset = 30 + 8 + 4;
-                //PaintSquare(bitmapCanvas, width, height, paintText, offset);
-                //PaintName(bitmapCanvas, Name, width - offset, height - offset, paintText, offset);
-
-
-                //PaintSquare(bitmapCanvas, width, height, paintText, offset);
-                //PaintName(bitmapCanvas, Name, width - 2 * offset, height - 2 * offset, paintText, offset);
-
-
-                PaintName(bitmapCanvas, Name, width, height , paintText, offset);
                 PaintSquare(bitmapCanvas, width, height, paintText, offset);
-
+                PaintName(bitmapCanvas, Name, width, height, paintText, offset);
             }
             Common.ImageBytes = BitmapHelper.GetBytes(stampBitmap); //将位图转为字节数组（以后 重新生成时用）
         }
@@ -283,28 +263,23 @@ namespace SkiaSharpDemo.WoSign
                 Color = SKColors.Red
             };
             // Draw one frame。
-            bitmapCanvas.DrawRoundRect(frameRect, 0, 0, framePaint);
+            bitmapCanvas.DrawRoundRect(frameRect, 0, 0, framePaint); //画外框
 
             // Inflate the frameRect and draw another
-            frameRect.Inflate(-(strokeWidth + 8), -(strokeWidth + 8));
+            frameRect.Inflate(-(strokeWidth + 2), -(strokeWidth + 2));  //缩小
             framePaint.StrokeWidth = 4;
             bitmapCanvas.DrawRoundRect(frameRect, 0, 0, framePaint);
-
 
         }
 
         private void PaintName(SKCanvas bitmapCanvas, string name, float width, float height, SKPaint paintText, float offset)
         {
-            ////相对中心点来 画文本，
-            //bitmapCanvas.Translate(width / 2.0f, height / 2.0f);
-
             ////宽高用内部正方形
-            //width = width - 2 * offset;
-            //height = height - 2 * offset;
+            bitmapCanvas.Translate(offset, offset);
+            width = width - 2 * offset;
+            height = height - 2 * offset;
 
-            //bitmapCanvas.Translate(offset, offset);
-
-            name = name + "印";
+            name = name + yinStr;
             paintText.Color = colorRed;
             paintText.TextSize = 140;
             SKRect rect = new SKRect();
@@ -317,45 +292,171 @@ namespace SkiaSharpDemo.WoSign
                 for (int i = 0; i < name.Length; i++)
                 {
                     word = name[i].ToString();
+                    if (word == yinStr)
+                    {
+                        paintText.TextSize = 200;
+                    }
                     paintText.MeasureText(word, ref rect);
 
                     x = width / 2.0f - rect.Width / 2.0f;
-                    y = height / 4.0f + rect.Height / 2.0f + i * (height / 2.0f);
-                    if (name[i] == '印')
+                    if (i % 2 == 0)
                     {
-                        paintText.TextSize = 180;
+                        y = height / 4.0f + rect.Height / 2.0f - 10;
+                    }
+                    else
+                    {
+                        y = 3 * height / 4.0f + rect.Height / 2.0f;
                     }
                     bitmapCanvas.DrawText(word, x, y, paintText);
                 }
             }
             else if (name.Length <= 4)
             {
-                float x = 0;
-                float y = 0;
-                for (int i = 0; i < name.Length; i++)
-                {
-                    word = name[i].ToString();
-                    paintText.MeasureText(word, ref rect);
-
-                    y = height / 4.0f + rect.Height / 2.0f + (i % 2) * (height / 2.0f);  //height加0或1个 字高的一半
-                    if (i <= 1)
-                    {
-                        x = width / 4.0f - rect.Width / 2.0f + width / 2.0f;
-                    }
-                    else
-                    {
-                        x = width / 4.0f - rect.Width / 2.0f;
-                    }
-
-                    if (name[i] == '印')
-                    {
-                        paintText.TextSize = 180;
-                    }
-                    bitmapCanvas.DrawText(name[i].ToString(), x, y, paintText);
-                }
+                PaintNameFour(bitmapCanvas, name, width, height, paintText);
             }
-
+            else if (name.Length <= 6)
+            {
+                PaintNameSix(bitmapCanvas, name, width, height, paintText);
+            }
+            else if (name.Length <= 9)
+            {
+                PaintNameNine(bitmapCanvas, name, width, height, paintText);
+            }
         }
+
+        private void PaintNameFour(SKCanvas bitmapCanvas, string name, float width, float height, SKPaint paintText)
+        {
+            SKRect rect = new SKRect();
+            string word;
+
+            float x = 0;
+            float y = 0;
+            for (int i = 0; i < name.Length; i++)
+            {
+                word = name[i].ToString();
+                if (word == yinStr)
+                {
+                    paintText.TextSize = 200;
+                }
+                paintText.MeasureText(word, ref rect);
+
+                if (i <= 1)
+                {
+                    x = width / 4.0f - rect.Width / 2.0f + width / 2.0f;
+                }
+                else
+                {
+                    x = width / 4.0f - rect.Width / 2.0f;
+                }
+
+                if (i % 2 == 0)
+                {
+                    y = height / 4.0f + rect.Height / 2.0f - 10;
+                }
+                else
+                {
+                    y = height / 4.0f + rect.Height / 2.0f + (height / 2.0f);  //height加0或1个 字高的一半
+                }
+
+                if (name.Length == 3 && i == 2)
+                {
+                    y = height / 2.0f + rect.Height / 2.0f;
+                }
+                bitmapCanvas.DrawText(name[i].ToString(), x, y, paintText);
+            }
+        }
+        private void PaintNameSix(SKCanvas bitmapCanvas, string name, float width, float height, SKPaint paintText)
+        {
+            SKRect rect = new SKRect();
+            string word;
+
+            float x = 0;
+            float y = 0;
+            paintText.TextSize = 100;
+            for (int i = 0; i < name.Length; i++)
+            {
+                word = name[i].ToString();
+                if (word == yinStr)
+                {
+                    paintText.TextSize = 160;
+                }
+                paintText.MeasureText(word, ref rect);
+
+                if (i <= 2)
+                {
+                    x = width / 4.0f - rect.Width / 2.0f + width / 2.0f;
+                }
+                else
+                {
+                    x = width / 4.0f - rect.Width / 2.0f;
+                }
+
+                if (i == 0 || i == 3)
+                {
+                    y = height / 6.0f + rect.Height / 2.0f - 10;
+                }
+                else if (i == 1 || i == 4)
+                {
+                    y = height / 6.0f + height / 3.0f + rect.Height / 2.0f - 10;
+                }
+                else
+                {
+                    y = height / 6.0f + 2 * height / 3.0f + rect.Height / 2.0f - 10;
+                }
+                bitmapCanvas.DrawText(name[i].ToString(), x, y, paintText);
+            }
+        }
+        private void PaintNameNine(SKCanvas bitmapCanvas, string name, float width, float height, SKPaint paintText)
+        {
+            SKRect rect = new SKRect();
+            string word;
+
+            float x = 0;
+            float y = 0;
+            paintText.TextSize = 100;
+            for (int i = 0; i < name.Length; i++)
+            {
+                word = name[i].ToString();
+                if (word == yinStr)
+                {
+                    paintText.TextSize = 160;
+                }
+                paintText.MeasureText(word, ref rect);
+
+                if (i <= 2)
+                {
+                    x = 2 * width / 3.0f + width / 6.0f - rect.Width / 2.0f;
+                }
+                else if (i <= 5)
+                {
+                    x = width / 3.0f + width / 6.0f - rect.Width / 2.0f;
+                }
+                else
+                {
+                    x = width / 6.0f - rect.Width / 2.0f;
+                }
+
+                if (i == 0 || i == 3 || i == 6)
+                {
+                    y = height / 6.0f + rect.Height / 2.0f - 10;
+                }
+                else if (i == 1 || i == 4 || i == 7)
+                {
+                    y = height / 6.0f + height / 3.0f + rect.Height / 2.0f - 10;
+                }
+                else
+                {
+                    y = height / 6.0f + 2 * height / 3.0f + rect.Height / 2.0f - 10;
+                }
+
+                if (name.Length == 7 && i == 6)
+                {
+                    y = height / 2.0f + rect.Height / 2.0f;
+                }
+                bitmapCanvas.DrawText(name[i].ToString(), x, y, paintText);
+            }
+        }
+
 
         private void CreateV2EN()
         {
@@ -366,30 +467,47 @@ namespace SkiaSharpDemo.WoSign
             {
                 bitmapCanvas.Clear(SKColors.White); //位图的底部颜色
 
-                PaintName(bitmapCanvas, width, height, paintText);
+                PaintV2EnName(bitmapCanvas, Name, height, paintText);
                 PaintLine(bitmapCanvas, width, height, paintLine);
-                PaintNameAndEmail(bitmapCanvas, width, height, paintText);
+                PaintNameAndEmail(bitmapCanvas, Name, Email, height, paintText);
             }
             Common.ImageBytes = BitmapHelper.GetBytes(stampBitmap); //将位图转为字节数组（以后 重新生成时用）
         }
+        /// <summary>
+        /// 画英文姓名，字体（Palace Script MT Bold）
+        /// </summary>
+        /// <param name="bitmapCanvas"></param>
+        /// <param name="enName"></param>
+        /// <param name="height"></param>
+        /// <param name="paintText"></param>
+        private void PaintV2EnName(SKCanvas bitmapCanvas, string enName, int height, SKPaint paintText)
+        {
+            //paintText.Typeface = SKTypeface.FromFile("SkiaSharpDemo.PALSCRI.TTF"); //此种方式不行
+            paintText.Typeface = TypefaceCustomize.PalaceScript;
 
-        private void PaintNameAndEmail(SKCanvas bitmapCanvas, int width, int height, SKPaint paintText)
+            paintText.Color = colorBlack;
+            paintText.TextSize = 160;
+            SKRect rect = new SKRect();
+            paintText.MeasureText(enName, ref rect);
+            bitmapCanvas.DrawText(enName, 10, (height / 2.0f) / 2.0f + rect.Height / 2.0f, paintText);
+
+            paintText.Typeface = null;
+        }
+        private void PaintNameAndEmail(SKCanvas bitmapCanvas, string enName, string email, int height, SKPaint paintText)
         {
             paintText.Color = colorBlue;
             paintText.TextSize = 60;
             SKRect rect = new SKRect();
-            paintText.MeasureText(Name, ref rect);
+            paintText.MeasureText(enName, ref rect);
             float y1 = height / 2.0f + rect.Height + 20;
-            bitmapCanvas.DrawText(Name, 0, y1, paintText); //为了靠近一点横线，减号后面是临时加的
+            bitmapCanvas.DrawText(enName, 10, y1, paintText);
 
             rect = new SKRect();
-            paintText.MeasureText(Email, ref rect);
-            bitmapCanvas.DrawText(Email, 0, y1 + rect.Height + 10, paintText); //为了靠近一点横线，减号后面是临时加的
+            paintText.MeasureText(email, ref rect);
+            bitmapCanvas.DrawText(email, 10, y1 + rect.Height + 10, paintText);
         }
 
         #endregion
-
-
 
         #region V3
 
@@ -402,14 +520,14 @@ namespace SkiaSharpDemo.WoSign
             {
                 bitmapCanvas.Clear(SKColors.White); //位图的底部颜色
 
-                PaintV3Up(bitmapCanvas, width, height, paintText);
+                PaintV3Up(bitmapCanvas, paintText);
                 PaintLine(bitmapCanvas, width, height, paintLine);
                 PaintV3Down(bitmapCanvas, width, height, paintText);
             }
             Common.ImageBytes = BitmapHelper.GetBytes(stampBitmap); //将位图转为字节数组（以后 重新生成时用）
         }
 
-        private void PaintV3Up(SKCanvas bitmapCanvas, int width, int height, SKPaint paintText)
+        private void PaintV3Up(SKCanvas bitmapCanvas, SKPaint paintText)
         {
             paintText.Color = colorBlack;
             paintText.TextSize = 60;
@@ -431,7 +549,7 @@ namespace SkiaSharpDemo.WoSign
             rect = new SKRect();
             paintText.MeasureText(Name, ref rect);
             top = top + rect.Height + 30;
-            bitmapCanvas.DrawText(Name, 40, top, paintText);
+            bitmapCanvas.DrawText(Name, 40, top, paintText);  //字体用 Palace Script MT
         }
 
         private void PaintV3Down(SKCanvas bitmapCanvas, int width, int height, SKPaint paintText)
@@ -479,20 +597,45 @@ namespace SkiaSharpDemo.WoSign
         #region V4
         private void CreateV4EN()
         {
-            width = Convert.ToInt32(397 * scale);
-            height = Convert.ToInt32(218 * scale); ;
+            width = Convert.ToInt32(335 * scale);
+            height = Convert.ToInt32(262 * scale); ;
             stampBitmap = new SKBitmap(width, height);
             using (SKCanvas bitmapCanvas = new SKCanvas(stampBitmap))
             {
                 bitmapCanvas.Clear(SKColors.White); //位图的底部颜色
 
-                PaintV3Up(bitmapCanvas, width, height, paintText);
+                PaintV4Up(bitmapCanvas, paintText);
                 PaintLine(bitmapCanvas, width, height, paintLine);
                 PaintV4Down(bitmapCanvas, width, height, paintText);
             }
             Common.ImageBytes = BitmapHelper.GetBytes(stampBitmap); //将位图转为字节数组（以后 重新生成时用）
         }
+        private void PaintV4Up(SKCanvas bitmapCanvas, SKPaint paintText)
+        {
+            paintText.Color = colorBlack;
+            paintText.TextSize = 60;
+            SKRect rect = new SKRect();
+            string text = "For and on behalf of";
+            paintText.MeasureText(text, ref rect);
+            float top = rect.Height + 10;
+            bitmapCanvas.DrawText(text, 0, top, paintText);
 
+            paintText.Color = colorBlue;
+            paintText.TextSize = 60;
+            rect = new SKRect();
+            paintText.MeasureText(Company, ref rect);
+            top = top + rect.Height + 20;
+            bitmapCanvas.DrawText(Company, 20, top, paintText);
+
+            paintText.Color = colorBlack;
+            paintText.Typeface = TypefaceCustomize.PalaceScript;
+            paintText.TextSize = 160;
+            rect = new SKRect();
+            paintText.MeasureText(Name, ref rect);
+            top = top + rect.Height + 30;
+            bitmapCanvas.DrawText(Name, 40, top, paintText);  //字体用 Palace Script MT
+            paintText.Typeface = TypefaceCustomize.Regular;
+        }
         private void PaintV4Down(SKCanvas bitmapCanvas, int width, int height, SKPaint paintText)
         {
             paintText.Color = colorBlue;
